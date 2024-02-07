@@ -1,6 +1,6 @@
 {
     "name": "expando-repo/loco-package",
-    "description": "Knihovna pro snadnější komunikaci s aplikaci LOCO",
+    "description": "Client library for application LOCO (Localization content connect)",
     "type": "library",
     "authors": [
         {
