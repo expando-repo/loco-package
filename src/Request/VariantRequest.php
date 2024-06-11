@@ -28,11 +28,15 @@ class VariantRequest extends Base implements IRequest
      * @param string $name
      * @param string $value
      * @param bool $isVariant
+     * @param ?string $identifierName
+     * @param ?string $identifierValue
      */
-    public function addOption(string $name, string $value, bool $isVariant = false): void
+    public function addOption(string $name, string $value, bool $isVariant = false, ?string $identifierName = null, ?string $identifierValue = null): void
     {
         $option = [
+            'identifier' => $identifierName,
             'name' => $name,
+            'value_identifier' => $identifierValue,
             'value' => $value,
             'variant' => $isVariant ? 1 : 0,
         ];

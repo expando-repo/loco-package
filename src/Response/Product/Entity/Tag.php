@@ -8,11 +8,13 @@ class Tag
 {
     private int $tag_id;
     private string $title;
+    private string $identifier;
 
     public function __construct(array $data)
     {
         $this->tag_id = (int) $data['tag_id'];
         $this->title = $data['title'];
+        $this->identifier = $data['identifier'];
     }
 
     /**
@@ -29,5 +31,10 @@ class Tag
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
     }
 }

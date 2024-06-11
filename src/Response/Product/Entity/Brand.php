@@ -9,10 +9,13 @@ class Brand
     private int $brand_id;
     private string $title;
 
+    private string $identifier;
+
     public function __construct(array $data)
     {
         $this->brand_id = (int) $data['brand_id'];
         $this->title = $data['title'];
+        $this->identifier = $data['identifier'] ?? null;
     }
 
     /**
@@ -29,5 +32,10 @@ class Brand
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
     }
 }

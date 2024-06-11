@@ -11,6 +11,8 @@ class Option
     private string $name;
     private string $value;
     private int $variant;
+    private int $identifierName;
+    private int $identifierValue;
 
     public function __construct(array $data)
     {
@@ -19,6 +21,8 @@ class Option
         $this->name = $data['name'];
         $this->value = $data['value'];
         $this->variant = (int) $data['variant'];
+        $this->identifierName = $data['identifier'];
+        $this->identifierValue = $data['value_identifier'];
     }
 
     /**
@@ -59,5 +63,15 @@ class Option
     public function getVariant(): int
     {
         return $this->variant;
+    }
+
+    public function getIdentifierName(): int
+    {
+        return $this->identifierName;
+    }
+
+    public function getIdentifierValue(): int
+    {
+        return $this->identifierValue;
     }
 }

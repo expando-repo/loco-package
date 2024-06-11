@@ -9,12 +9,14 @@ class Category
     private int $category_id;
     private string $title;
     private ?string $description = null;
+    private string $identifier;
 
     public function __construct(array $data)
     {
         $this->category_id = (int) $data['category_id'];
         $this->title = $data['title'];
         $this->description = $data['description'] ?? null;
+        $this->identifier = $data['identifier'] ?? null;
     }
 
     /**
@@ -39,5 +41,10 @@ class Category
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    public function getIdentifier(): ?string
+    {
+        return $this->identifier;
     }
 }

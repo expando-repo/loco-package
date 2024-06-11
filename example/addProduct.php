@@ -29,15 +29,17 @@
             $product->setDescription2($_POST['product_description2'] ?? null);
             $product->setUrl($_POST['url'] ?? null);
 
-            foreach ($_POST['brands'] ?? [] as $brand) {
+            foreach ($_POST['brands'] ?? [] as $k => $brand) {
                 if ($brand) {
-                    $product->addBrand($brand);
+                    $identifier = $_POST['brand_identifier'][$k] ?? null;
+                    $product->addBrand($brand, $identifier);
                 }
             }
 
-            foreach ($_POST['tags'] ?? [] as $tag) {
+            foreach ($_POST['tags'] ?? [] as $k => $tag) {
                 if ($tag) {
-                    $product->addTag($tag);
+                    $identifier = $_POST['tag_identifier'][$k] ?? null;
+                    $product->addTag($tag, $identifier);
                 }
             }
 
@@ -48,9 +50,10 @@
                 }
             }
 
-            foreach ($_POST['categories'] ?? [] as $value) {
+            foreach ($_POST['categories'] ?? [] as $k => $value) {
                 if ($value) {
-                    $product->addCategory($value);
+                    $identifier = $_POST['category_identifier'][$k] ?? null;
+                    $product->addCategory($value, null, $identifier);
                 }
             }
 
@@ -65,14 +68,18 @@
                     $variant->setDescription($value['description']);
                     $variant->setImageUrl($value['image']);
                     $variant->setStock($value['stock']);
-                    foreach ($value['options_variant'] ?? [] as $option) {
+                    foreach ($value['options_variant'] ?? [] as $k => $option) {
                         if ($option['name'] && $option['value']) {
-                            $variant->addOption($option['name'], $option['value'], true);
+                            $identifierName = $option['identifier'] ?? null;
+                            $identifierValue = $option['identifier_value'] ?? null;
+                            $variant->addOption($option['name'], $option['value'], true, $identifierName, $identifierValue);
                         }
                     }
                     foreach ($value['options'] ?? [] as $option) {
                         if ($option['name'] && $option['value']) {
-                            $variant->addOption($option['name'], $option['value']);
+                            $identifierName = $option['identifier'] ?? null;
+                            $identifierValue = $option['identifier_value'] ?? null;
+                            $variant->addOption($option['name'], $option['value'], false, $identifierName, $identifierValue);
                         }
                     }
                     $product->addVariant($variant);
@@ -136,12 +143,14 @@
     <div>
         <label>
             Brand 1<br />
+            <input type="text" name="brand_identifier[]" placeholder="identifier" value="<?php echo $_POST['brand_identifier'][0] ?? '' ?>"  />
             <input type="text" name="brands[]" value="<?php echo $_POST['brands'][0] ?? 'Willsoor' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Brand 2<br />
+            <input type="text" name="brand_identifier[]" placeholder="identifier" value="<?php echo $_POST['brand_identifier'][1] ?? '' ?>"  />
             <input type="text" name="brands[]" value="<?php echo $_POST['brands'][1] ?? '' ?>"  />
         </label>
     </div>
@@ -150,19 +159,15 @@
     <div>
         <label>
             Tag 1<br />
+            <input type="text" name="tag_identifier[]" placeholder="identifier" value="<?php echo $_POST['tag_identifier'][0] ?? '' ?>"  />
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][0] ?? 'Sleva' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Tag 2<br />
+            <input type="text" name="tag_identifier[]" placeholder="identifier" value="<?php echo $_POST['tag_identifier'][1] ?? '' ?>"  />
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][1] ?? 'Novinka' ?>"  />
-        </label>
-    </div>
-    <div>
-        <label>
-            Tag 3<br />
-            <input type="text" name="tags[]" value=""  />
         </label>
     </div>
     <br />
@@ -170,18 +175,21 @@
     <div>
         <label>
             Category 1<br />
+            <input type="text" name="category_identifier[]" placeholder="identifier" value="<?php echo $_POST['category_identifier'][0] ?? '' ?>"  />
             <input type="text" name="categories[]" value="<?php echo $_POST['categories'][0] ?? 'WILLSOOR' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Category 2<br />
+            <input type="text" name="category_identifier[]" placeholder="identifier" value="<?php echo $_POST['category_identifier'][1] ?? '' ?>"  />
             <input type="text" name="categories[]" value="<?php echo $_POST['categories'][1] ?? 'PÁNSKÉ KOŠILE' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Category 3<br />
+            <input type="text" name="category_identifier[]" placeholder="identifier" value="<?php echo $_POST['category_identifier'][2] ?? '' ?>"  />
             <input type="text" name="categories[]" value="<?php echo $_POST['categories'][2] ?? 'KLASICKÉ KOŠILE' ?>"  />
         </label>
     </div>
@@ -253,48 +261,56 @@
     <div>
         <label>
             Option 1 (tvoří variantu)<br />
+            <input type="text" name="variant[1][options_variant][1][identifier]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options_variant'][1]['identifier'] ?? '' ?>"  />
             <input type="text" name="variant[1][options_variant][1][name]" value="<?php echo $_POST['variant'][1]['options_variant'][1]['name'] ?? 'Barva' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Option value 1 (tvoří variantu)<br />
+            <input type="text" name="variant[1][options_variant][1][identifier_value]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options_variant'][1]['identifier_value'] ?? '' ?>"  />
             <input type="text" name="variant[1][options_variant][1][value]" value="<?php echo $_POST['variant'][1]['options_variant'][1]['value'] ?? 'Modrá' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Option 2 (tvoří variantu)<br />
+            <input type="text" name="variant[1][options_variant][2][identifier]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options_variant'][2]['identifier'] ?? '' ?>"  />
             <input type="text" name="variant[1][options_variant][2][name]" value="<?php echo $_POST['variant'][1]['options_variant'][2]['name'] ?? 'Velikost' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Option value 2 (tvoří variantu)<br />
+            <input type="text" name="variant[1][options_variant][2][identifier_value]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options_variant'][2]['identifier_value'] ?? '' ?>"  />
             <input type="text" name="variant[1][options_variant][2][value]" value="<?php echo $_POST['variant'][1]['options_variant'][2]['value'] ?? 'XXL' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Option 3<br />
+            <input type="text" name="variant[1][options][3][identifier]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options'][3]['identifier'] ?? '' ?>"  />
             <input type="text" name="variant[1][options][3][name]" value="<?php echo $_POST['variant'][1]['options'][3]['name'] ?? 'Rukáv' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Option 3<br />
+            <input type="text" name="variant[1][options][3][identifier_value]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options'][3]['identifier_value'] ?? '' ?>"  />
             <input type="text" name="variant[1][options][3][value]" value="<?php echo $_POST['variant'][1]['options'][3]['value'] ?? 'dlouhý' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Option 4<br />
+            <input type="text" name="variant[1][options][4][identifier]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options'][4]['identifier'] ?? '' ?>"  />
             <input type="text" name="variant[1][options][4][name]" value="<?php echo $_POST['variant'][1]['options'][4]['name'] ?? 'Pohlaví' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Option 4<br />
+            <input type="text" name="variant[1][options][4][identifier_value]" placeholder="identifier" value="<?php echo $_POST['variant'][1]['options'][4]['identifier_value'] ?? '' ?>"  />
             <input type="text" name="variant[1][options][4][value]" value="<?php echo $_POST['variant'][1]['options'][4]['value'] ?? 'pánská' ?>"  />
         </label>
     </div>

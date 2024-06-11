@@ -75,11 +75,13 @@ class ProductRequest extends Base implements IRequest
 
     /**
      * @param string $title
+     * @param string|null $identifier
      * @return void
      */
-    public function addBrand(string $title): void
+    public function addBrand(string $title, ?string $identifier = null): void
     {
         $brand = [
+            'identifier' => $identifier,
             'title' => $title,
         ];
         $this->brands[] = $brand;
@@ -88,11 +90,13 @@ class ProductRequest extends Base implements IRequest
     /**
      * @param string $title
      * @param string|null $description
+     * @param string|null $identifier
      * @return void
      */
-    public function addCategory(string $title, ?string $description = null): void
+    public function addCategory(string $title, ?string $description = null, ?string $identifier = null): void
     {
         $category = [
+            'identifier' => $identifier,
             'title' => $title,
             'description' => $description,
         ];
@@ -101,11 +105,13 @@ class ProductRequest extends Base implements IRequest
 
     /**
      * @param string $title
+     * @param string|null $identifier
      * @return void
      */
-    public function addTag(string $title): void
+    public function addTag(string $title, ?string $identifier = null): void
     {
         $tag = [
+            'identifier' => $identifier,
             'title' => $title,
         ];
         $this->tags[] = $tag;
