@@ -97,7 +97,7 @@ class GetResponse implements IResponse
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
     public function getIdentifier(): ?string
     {
