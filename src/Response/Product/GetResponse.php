@@ -97,9 +97,9 @@ class GetResponse implements IResponse
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getIdentifier(): ?int
+    public function getIdentifier(): ?string
     {
         return $this->data['identifier'] ?? null;
     }
