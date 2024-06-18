@@ -10,13 +10,21 @@ class Category
     private string $title;
     private ?string $description = null;
     private string $identifier;
+    private ?string $description2 = null;
+    private ?string $seo_title = null;
+    private ?string $seo_description = null;
+    private ?string $menu_title= null;
 
     public function __construct(array $data)
     {
-        $this->category_id = (int) $data['category_id'];
+        $this->category_id = (int)$data['category_id'];
         $this->title = $data['title'];
         $this->description = $data['description'] ?? null;
         $this->identifier = $data['identifier'] ?? null;
+        $this->description2 = $data['description2'] ?? null;
+        $this->seo_description = $data['seo_description'] ?? null;
+        $this->seo_title = $data['seo_title'] ?? null;
+        $this->menu_title = $data['$menu_title'] ?? null;
     }
 
     /**
@@ -41,6 +49,38 @@ class Category
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription2(): ?string
+    {
+        return $this->description2;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoDescription(): ?string
+    {
+        return $this->seo_description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoTitle(): ?string
+    {
+        return $this->seo_title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMenuTitle(): ?string
+    {
+        return $this->menu_title;
     }
 
     public function getIdentifier(): ?string

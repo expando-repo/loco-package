@@ -68,7 +68,7 @@ class ProductRequest extends Base implements IRequest
         $image = [
             'position' => $position,
             'src' => $url,
-            'default' => (int) $default,
+            'default' => (int)$default,
         ];
         $this->images[] = $image;
     }
@@ -91,14 +91,22 @@ class ProductRequest extends Base implements IRequest
      * @param string $title
      * @param string|null $description
      * @param string|null $identifier
+     * @param string|null $description2
+     * @param string|null $seo_title
+     * @param string|null $seo_description
+     * @param string|null $menu_title
      * @return void
      */
-    public function addCategory(string $title, ?string $description = null, ?string $identifier = null): void
+    public function addCategory(string $title, ?string $description = null, ?string $identifier = null, ?string $description2 = null, ?string $seo_title = null, ?string $seo_description = null, ?string $menu_title = null): void
     {
         $category = [
             'identifier' => $identifier,
             'title' => $title,
             'description' => $description,
+            'description2' => $description2,
+            'seo_description' => $seo_description,
+            'seo_title' => $seo_title,
+            'menu_title' => $menu_title,
         ];
         $this->categories[] = $category;
     }
