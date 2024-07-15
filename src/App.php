@@ -259,6 +259,22 @@ class App
     }
 
     /**
+     * @param int $icu
+     * @param array<int> $productId
+     * @return bool
+     * @throws AppException
+     */
+    public function deleteTranslation(string $icu, array $productId): bool
+    {
+        if (!$this->isLogged()) {
+            throw new AppException('App is not logged');
+        }
+
+        $data = $this->sendToApp('/translations/delete/' . $icu . '/', 'DELETE', ['product_id' => $productId]);
+        return $data['status'] === 'success';
+    }
+
+    /**
      * @param string $action
      * @param $method
      * @param array $body
@@ -282,7 +298,7 @@ class App
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        if (!empty($body) && in_array($method, ['POST', 'PUT'])) {
+        if (!empty($body) && in_array($method, ['POST', 'PUT', 'DELETE'])) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($body));
         }
         $return = curl_exec($ch);
