@@ -19,6 +19,7 @@ if (($_POST['send'] ?? null) || ($_GET['code'] ?? null)) {
         );
         $login->addScope('products');
         $login->addScope('connections');
+        $login->addScope('translations');
         $token = $login->getToken();
     } catch (LoginException $e) {
         die($e->getMessage());
