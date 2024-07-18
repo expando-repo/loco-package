@@ -259,18 +259,18 @@ class App
     }
 
     /**
-     * @param int $icu
-     * @param array<int> $productId
+     * @param ?string $icu
+     * @param array<int> $productIds
      * @return bool
      * @throws AppException
      */
-    public function deleteTranslation(string $icu, array $productId): bool
+    public function deleteTranslation(array $productIds, ?string $icu = null): bool
     {
         if (!$this->isLogged()) {
             throw new AppException('App is not logged');
         }
 
-        $data = $this->sendToApp('/translations/delete/' . $icu . '/', 'DELETE', ['product_id' => $productId]);
+        $data = $this->sendToApp('/translations/delete/' . $icu, 'DELETE', ['product_id' => $productIds]);
         return $data['status'] === 'success';
     }
 
