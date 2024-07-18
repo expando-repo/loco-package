@@ -17,7 +17,7 @@
 
     if ($_POST['send'] ?? null) {
         try {
-            $response = $app->deleteTranslation($_POST['language_icu'], (array) $_POST['product_id']);
+            $response = $app->deleteTranslation((array) $_POST['product_id'], $_POST['language_icu']);
         }
         catch (\Expando\LocoPackage\Exceptions\AppException $e) {
             die($e->getMessage());
