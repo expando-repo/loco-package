@@ -10,6 +10,7 @@ class Image
     private string $src;
     private ?int $position = null;
     private int $default;
+    private ?string $alt = null;
 
     public function __construct(array $data)
     {
@@ -17,6 +18,7 @@ class Image
         $this->src = $data['src'];
         $this->position = (int) $data['position'] ?: null;
         $this->default = (int) $data['default'] ?: 0;
+        $this->alt = $data['alt'] ?: null;
     }
 
     /**
@@ -49,5 +51,13 @@ class Image
     public function getDefault(): int
     {
         return $this->default;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAlt(): ?string
+    {
+        return $this->alt;
     }
 }

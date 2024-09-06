@@ -27,26 +27,33 @@
             $product->setTitle($_POST['product_title']);
             $product->setDescription($_POST['product_description']);
             $product->setDescription2($_POST['product_description2'] ?? null);
+            $product->setSeoTitle($_POST['product_seo_title'] ?? null);
+            $product->setSeoDescription($_POST['product_seo_description'] ?? null);
             $product->setUrl($_POST['url'] ?? null);
 
             foreach ($_POST['brands'] ?? [] as $k => $brand) {
                 if ($brand) {
                     $identifier = $_POST['brand_identifier'][$k] ?? null;
-                    $product->addBrand($brand, $identifier);
+                    $seoTitle = $_POST['brand_seo_title'][$k] ?? null;
+                    $seoDescription = $_POST['brand_seo_description'][$k] ?? null;
+                    $product->addBrand($brand, $identifier, $seoTitle, $seoDescription);
                 }
             }
 
             foreach ($_POST['tags'] ?? [] as $k => $tag) {
                 if ($tag) {
                     $identifier = $_POST['tag_identifier'][$k] ?? null;
-                    $product->addTag($tag, $identifier);
+                    $seoTitle = $_POST['tag_seo_title'][$k] ?? null;
+                    $seoDescription = $_POST['tag_seo_description'][$k] ?? null;
+                    $product->addTag($tag, $identifier, $seoTitle, $seoDescription);
                 }
             }
 
             $i = 0;
             foreach ($_POST['images'] ?? [] as $url) {
                 if ($url) {
-                    $product->addImageUrl($url, $i++, $i === 1);
+                    $alt = $_POST['image_alt'][$k] ?? null;
+                    $product->addImageUrl($url, $i++, $i === 1, $alt);
                 }
             }
 
@@ -55,6 +62,19 @@
                     $identifier = $_POST['category_identifier'][$k] ?? null;
                     $product->addCategory($value, null, $identifier);
                 }
+            }
+
+            foreach ($_POST['sections'] ?? [] as $k => $value) {
+                if ($value) {
+                    $identifier = $_POST['section_identifier'][$k] ?? null;
+                    $seoTitle = $_POST['section_seo_title'][$k] ?? null;
+                    $seoDescription = $_POST['section_seo_description'][$k] ?? null;
+                    $product->addSection($value, null, $identifier, null, $seoTitle, $seoDescription);
+                }
+            }
+
+            if (!empty($_POST['supplier'])) {
+                $product->setSupplier($_POST['supplier']);
             }
 
             foreach ($_POST['variant'] ?? [] as $value) {
@@ -134,8 +154,26 @@
     </div>
     <div>
         <label>
+            Product seo title<br />
+            <textarea name="product_seo_title"></textarea>
+        </label>
+    </div>
+    <div>
+        <label>
+            Product seo description<br />
+            <textarea name="product_seo_description"></textarea>
+        </label>
+    </div>
+    <div>
+        <label>
             Url produktu<br />
             <input type="text" name="url" value="<?php echo $_POST['url'] ?? 'https://www.willsoor.cz/p/13946-panska-klasicka-kosile-s-tmave-modrym-kostkovanym-vzorem/' ?>"  />
+        </label>
+    </div>
+    <div>
+        <label>
+            Supplier (dodavatel)<br />
+            <input type="text" name="supplier" value="<?php echo $_POST['supplier'] ?? 'Expando' ?>"  />
         </label>
     </div>
     <br />
@@ -145,6 +183,8 @@
             Brand 1<br />
             <input type="text" name="brand_identifier[]" placeholder="identifier" value="<?php echo $_POST['brand_identifier'][0] ?? '' ?>"  />
             <input type="text" name="brands[]" value="<?php echo $_POST['brands'][0] ?? 'Willsoor' ?>"  />
+            <input type="text" name="brand_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['brand_seo_title'][0] ?? 'Výrobek značky Willsoor' ?>"  />
+            <input type="text" name="brand_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['brand_seo_description'][0] ?? 'Tato stránka zobrazuje výrobky značky Willsoor' ?>"  />
         </label>
     </div>
     <div>
@@ -152,6 +192,8 @@
             Brand 2<br />
             <input type="text" name="brand_identifier[]" placeholder="identifier" value="<?php echo $_POST['brand_identifier'][1] ?? '' ?>"  />
             <input type="text" name="brands[]" value="<?php echo $_POST['brands'][1] ?? '' ?>"  />
+            <input type="text" name="brand_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['brand_seo_title'][1] ?? 'Výrobek značky Expando' ?>"  />
+            <input type="text" name="brand_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['brand_seo_description'][1] ?? 'Tato stránka zobrazuje výrobky značky Expando' ?>"  />
         </label>
     </div>
     <br />
@@ -161,6 +203,8 @@
             Tag 1<br />
             <input type="text" name="tag_identifier[]" placeholder="identifier" value="<?php echo $_POST['tag_identifier'][0] ?? '' ?>"  />
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][0] ?? 'Sleva' ?>"  />
+            <input type="text" name="tag_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['tag_seo_title'][0] ?? 'Produkt ve slevě' ?>"  />
+            <input type="text" name="tag_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['tag_seo_description'][0] ?? 'Tato stránka zobrazuje produkty ve slevě' ?>"  />
         </label>
     </div>
     <div>
@@ -168,6 +212,8 @@
             Tag 2<br />
             <input type="text" name="tag_identifier[]" placeholder="identifier" value="<?php echo $_POST['tag_identifier'][1] ?? '' ?>"  />
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][1] ?? 'Novinka' ?>"  />
+            <input type="text" name="tag_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['tag_seo_title'][1] ?? 'Nový produkt' ?>"  />
+            <input type="text" name="tag_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['tag_seo_description'][1] ?? 'Tato stránka zobrazuje novinky' ?>"  />
         </label>
     </div>
     <br />
@@ -197,20 +243,43 @@
     <br />
     <div>
         <label>
+            Section 1<br />
+            <input type="text" name="section_identifier[]" placeholder="identifier" value="<?php echo $_POST['section_identifier'][0] ?? '' ?>"  />
+            <input type="text" name="sections[]" value="<?php echo $_POST['sections'][0] ?? 'NOVINKA LÉTA' ?>"  />
+            <input type="text" name="section_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['section_seo_title'][1] ?? 'Sekce novinek léta' ?>"  />
+            <input type="text" name="section_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['section_seo_description'][1] ?? 'Tato sekce zobrazuje novinky tohoto léta' ?>"  />
+        </label>
+    </div>
+    <div>
+        <label>
+            Section 2<br />
+            <input type="text" name="section_identifier[]" placeholder="identifier" value="<?php echo $_POST['section_identifier'][1] ?? '' ?>"  />
+            <input type="text" name="sections[]" value="<?php echo $_POST['sections'][1] ?? 'DOPLŇKY' ?>"  />
+            <input type="text" name="section_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['section_seo_title'][1] ?? 'Sekce doplňků' ?>"  />
+            <input type="text" name="section_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['section_seo_description'][1] ?? 'Tato sekce zobrazuje doplňky' ?>"  />
+        </label>
+    </div>
+    <br />
+    <br />
+    <div>
+        <label>
             Image URL 1<br />
             <input type="text" name="images[]" value="<?php echo $_POST['images'][0] ?? 'https://www.willsoor.cz/images/produkty/thumb/13946img_9263_4_1.jpg' ?>"  />
+            <input type="text" name="image_alt[]" value="<?php echo $_POST['image_alt'][0] ?? 'Fotka pánské košile 1' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Image URL 2<br />
             <input type="text" name="images[]" value="<?php echo $_POST['images'][1] ?? 'https://www.willsoor.cz/images/produkty/thumb2/13946img_9265_5_1.jpg' ?>"  />
+            <input type="text" name="image_alt[]" value="<?php echo $_POST['image_alt'][1] ?? 'Fotka pánské košile 2' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Image URL 3<br />
             <input type="text" name="images[]" value="<?php echo $_POST['images'][2] ?? '' ?>"  />
+            <input type="text" name="image_alt[]" value="<?php echo $_POST['image_alt'][2] ?? 'Fotka pánské košile 3' ?>"  />
         </label>
     </div>
     <br />
