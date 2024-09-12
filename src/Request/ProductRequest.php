@@ -82,13 +82,19 @@ class ProductRequest extends Base implements IRequest
     /**
      * @param string $title
      * @param string|null $identifier
+     * @param string|null $seo_title
+     * @param string|null $seo_description
+     * @param string|null $keywords
      * @return void
      */
-    public function addBrand(string $title, ?string $identifier = null): void
+    public function addBrand(string $title, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $keywords = null): void
     {
         $brand = [
             'identifier' => $identifier,
             'title' => $title,
+            'seo_title' => $seo_title,
+            'seo_description' => $seo_description,
+            'keywords' => $keywords,
         ];
         $this->brands[] = $brand;
     }
@@ -100,10 +106,11 @@ class ProductRequest extends Base implements IRequest
      * @param string|null $description2
      * @param string|null $seo_title
      * @param string|null $seo_description
+     * @param string|null $seo_keywords
      * @param string|null $menu_title
      * @return void
      */
-    public function addCategory(string $title, ?string $description = null, ?string $identifier = null, ?string $description2 = null, ?string $seo_title = null, ?string $seo_description = null, ?string $menu_title = null): void
+    public function addCategory(string $title, ?string $description = null, ?string $identifier = null, ?string $description2 = null, ?string $seo_title = null, ?string $seo_description = null, ?string $seo_keywords = null, ?string $menu_title = null): void
     {
         $category = [
             'identifier' => $identifier,
@@ -112,6 +119,7 @@ class ProductRequest extends Base implements IRequest
             'description2' => $description2,
             'seo_description' => $seo_description,
             'seo_title' => $seo_title,
+            'seo_keywords' => $seo_keywords,
             'menu_title' => $menu_title,
         ];
         $this->categories[] = $category;
@@ -124,9 +132,10 @@ class ProductRequest extends Base implements IRequest
      * @param string|null $description2
      * @param string|null $seo_title
      * @param string|null $seo_description
+     * @param string|null $keywords
      * @return void
      */
-    public function addSection(string $title, ?string $description = null, ?string $identifier = null, ?string $description2 = null, ?string $seo_title = null, ?string $seo_description = null): void
+    public function addSection(string $title, ?string $description = null, ?string $identifier = null, ?string $description2 = null, ?string $seo_title = null, ?string $seo_description = null, ?string $keywords = null): void
     {
         $section = [
             'identifier' => $identifier,
@@ -135,6 +144,7 @@ class ProductRequest extends Base implements IRequest
             'description2' => $description2,
             'seo_description' => $seo_description,
             'seo_title' => $seo_title,
+            'keywords' => $keywords,
         ];
         $this->sections[] = $section;
     }
@@ -142,13 +152,19 @@ class ProductRequest extends Base implements IRequest
     /**
      * @param string $title
      * @param string|null $identifier
+     * @param string|null $seo_title
+     * @param string|null $seo_description
+     * @param string|null $keywords
      * @return void
      */
-    public function addTag(string $title, ?string $identifier = null): void
+    public function addTag(string $title, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $keywords = null): void
     {
         $tag = [
             'identifier' => $identifier,
             'title' => $title,
+            'seo_title' => $seo_title,
+            'seo_description' => $seo_description,
+            'keywords' => $keywords,
         ];
         $this->tags[] = $tag;
     }

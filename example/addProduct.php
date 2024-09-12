@@ -36,7 +36,8 @@
                     $identifier = $_POST['brand_identifier'][$k] ?? null;
                     $seoTitle = $_POST['brand_seo_title'][$k] ?? null;
                     $seoDescription = $_POST['brand_seo_description'][$k] ?? null;
-                    $product->addBrand($brand, $identifier, $seoTitle, $seoDescription);
+                    $seoKeywords = $_POST['brand_seo_keywords'][$k] ?? null;
+                    $product->addBrand($brand, $identifier, $seoTitle, $seoDescription, $seoKeywords);
                 }
             }
 
@@ -45,7 +46,8 @@
                     $identifier = $_POST['tag_identifier'][$k] ?? null;
                     $seoTitle = $_POST['tag_seo_title'][$k] ?? null;
                     $seoDescription = $_POST['tag_seo_description'][$k] ?? null;
-                    $product->addTag($tag, $identifier, $seoTitle, $seoDescription);
+                    $seoKeywords = $_POST['tag_seo_keywords'][$k] ?? null;
+                    $product->addTag($tag, $identifier, $seoTitle, $seoDescription, $seoKeywords);
                 }
             }
 
@@ -60,7 +62,10 @@
             foreach ($_POST['categories'] ?? [] as $k => $value) {
                 if ($value) {
                     $identifier = $_POST['category_identifier'][$k] ?? null;
-                    $product->addCategory($value, null, $identifier);
+                    $seoTitle = $_POST['category_seo_title'][$k] ?? null;
+                    $seoDescription = $_POST['category_seo_description'][$k] ?? null;
+                    $seoKeywords = $_POST['category_seo_keywords'][$k] ?? null;
+                    $product->addCategory(title: $value, identifier: $identifier, seo_title: $seoTitle, seo_description: $seoDescription, seo_keywords: $seoKeywords);
                 }
             }
 
@@ -69,7 +74,8 @@
                     $identifier = $_POST['section_identifier'][$k] ?? null;
                     $seoTitle = $_POST['section_seo_title'][$k] ?? null;
                     $seoDescription = $_POST['section_seo_description'][$k] ?? null;
-                    $product->addSection($value, null, $identifier, null, $seoTitle, $seoDescription);
+                    $seoKeywords = $_POST['section_seo_keywords'][$k] ?? null;
+                    $product->addSection($value, null, $identifier, null, $seoTitle, $seoDescription, $seoKeywords);
                 }
             }
 
@@ -105,6 +111,7 @@
                     $product->addVariant($variant);
                 }
             }
+            //echo json_encode($product);
             $response = $app->send($product);
         }
         catch (\Expando\LocoPackage\Exceptions\AppException $e) {
@@ -155,13 +162,13 @@
     <div>
         <label>
             Product seo title<br />
-            <textarea name="product_seo_title"></textarea>
+            <input type="text" name="product_seo_title" value="<?php echo $_POST['product_seo_title'] ?? 'Pánská košile' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Product seo description<br />
-            <textarea name="product_seo_description"></textarea>
+            <input type="text" name="product_seo_description" value="<?php echo $_POST['product_seo_description'] ?? 'Klasická elegantní pánská košile s rovným střihem a dlouhými rukávy.' ?>"  />
         </label>
     </div>
     <div>
@@ -185,15 +192,17 @@
             <input type="text" name="brands[]" value="<?php echo $_POST['brands'][0] ?? 'Willsoor' ?>"  />
             <input type="text" name="brand_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['brand_seo_title'][0] ?? 'Výrobek značky Willsoor' ?>"  />
             <input type="text" name="brand_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['brand_seo_description'][0] ?? 'Tato stránka zobrazuje výrobky značky Willsoor' ?>"  />
+            <input type="text" name="brand_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['brand_seo_keywords'][0] ?? 'Výrobek, značka, Willsoor' ?>"  />
         </label>
     </div>
     <div>
         <label>
             Brand 2<br />
             <input type="text" name="brand_identifier[]" placeholder="identifier" value="<?php echo $_POST['brand_identifier'][1] ?? '' ?>"  />
-            <input type="text" name="brands[]" value="<?php echo $_POST['brands'][1] ?? '' ?>"  />
+            <input type="text" name="brands[]" value="<?php echo $_POST['brands'][1] ?? 'Expando' ?>"  />
             <input type="text" name="brand_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['brand_seo_title'][1] ?? 'Výrobek značky Expando' ?>"  />
             <input type="text" name="brand_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['brand_seo_description'][1] ?? 'Tato stránka zobrazuje výrobky značky Expando' ?>"  />
+            <input type="text" name="brand_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['brand_seo_keywords'][1] ?? 'Výrobek, značka, Expando' ?>"  />
         </label>
     </div>
     <br />
@@ -205,6 +214,7 @@
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][0] ?? 'Sleva' ?>"  />
             <input type="text" name="tag_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['tag_seo_title'][0] ?? 'Produkt ve slevě' ?>"  />
             <input type="text" name="tag_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['tag_seo_description'][0] ?? 'Tato stránka zobrazuje produkty ve slevě' ?>"  />
+            <input type="text" name="tag_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['tag_seo_keywords'][0] ?? 'Slevy, produkty' ?>"  />
         </label>
     </div>
     <div>
@@ -214,6 +224,7 @@
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][1] ?? 'Novinka' ?>"  />
             <input type="text" name="tag_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['tag_seo_title'][1] ?? 'Nový produkt' ?>"  />
             <input type="text" name="tag_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['tag_seo_description'][1] ?? 'Tato stránka zobrazuje novinky' ?>"  />
+            <input type="text" name="tag_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['tag_seo_keywords'][1] ?? 'Novinky, produkty' ?>"  />
         </label>
     </div>
     <br />
@@ -223,6 +234,9 @@
             Category 1<br />
             <input type="text" name="category_identifier[]" placeholder="identifier" value="<?php echo $_POST['category_identifier'][0] ?? '' ?>"  />
             <input type="text" name="categories[]" value="<?php echo $_POST['categories'][0] ?? 'WILLSOOR' ?>"  />
+            <input type="text" name="category_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['category_seo_title'][0] ?? 'Kategorie značky Willsoor' ?>"  />
+            <input type="text" name="category_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['category_seo_description'][0] ?? 'Tato stránka zobrazuje produkty willsoor.' ?>"  />
+            <input type="text" name="category_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['category_seo_keywords'][0] ?? 'Kategorie, produkty, willsoor' ?>"  />
         </label>
     </div>
     <div>
@@ -230,6 +244,9 @@
             Category 2<br />
             <input type="text" name="category_identifier[]" placeholder="identifier" value="<?php echo $_POST['category_identifier'][1] ?? '' ?>"  />
             <input type="text" name="categories[]" value="<?php echo $_POST['categories'][1] ?? 'PÁNSKÉ KOŠILE' ?>"  />
+            <input type="text" name="category_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['category_seo_title'][1] ?? 'Kategorie pánských košil' ?>"  />
+            <input type="text" name="category_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['category_seo_description'][1] ?? 'Tato stránka zobrazuje kategorii pánské košile' ?>"  />
+            <input type="text" name="category_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['category_seo_keywords'][1] ?? 'Kategorie, produkty, pánské, košile' ?>"  />
         </label>
     </div>
     <div>
@@ -237,6 +254,9 @@
             Category 3<br />
             <input type="text" name="category_identifier[]" placeholder="identifier" value="<?php echo $_POST['category_identifier'][2] ?? '' ?>"  />
             <input type="text" name="categories[]" value="<?php echo $_POST['categories'][2] ?? 'KLASICKÉ KOŠILE' ?>"  />
+            <input type="text" name="category_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['category_seo_title'][2] ?? 'Kategorie klasických košil' ?>"  />
+            <input type="text" name="category_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['category_seo_description'][2] ?? 'Tato stránka zobrazuje kategorii klasické košile' ?>"  />
+            <input type="text" name="category_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['category_seo_keywords'][2] ?? 'Kategorie, produkty, klasické, košile' ?>"  />
         </label>
     </div>
     <br />
@@ -246,8 +266,9 @@
             Section 1<br />
             <input type="text" name="section_identifier[]" placeholder="identifier" value="<?php echo $_POST['section_identifier'][0] ?? '' ?>"  />
             <input type="text" name="sections[]" value="<?php echo $_POST['sections'][0] ?? 'NOVINKA LÉTA' ?>"  />
-            <input type="text" name="section_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['section_seo_title'][1] ?? 'Sekce novinek léta' ?>"  />
-            <input type="text" name="section_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['section_seo_description'][1] ?? 'Tato sekce zobrazuje novinky tohoto léta' ?>"  />
+            <input type="text" name="section_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['section_seo_title'][0] ?? 'Sekce novinek léta' ?>"  />
+            <input type="text" name="section_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['section_seo_description'][0] ?? 'Tato sekce zobrazuje novinky tohoto léta' ?>"  />
+            <input type="text" name="section_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['section_seo_keywords'][0] ?? 'Sekce, produkty, novinky, léto' ?>"  />
         </label>
     </div>
     <div>
@@ -257,6 +278,7 @@
             <input type="text" name="sections[]" value="<?php echo $_POST['sections'][1] ?? 'DOPLŇKY' ?>"  />
             <input type="text" name="section_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['section_seo_title'][1] ?? 'Sekce doplňků' ?>"  />
             <input type="text" name="section_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['section_seo_description'][1] ?? 'Tato sekce zobrazuje doplňky' ?>"  />
+            <input type="text" name="section_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['section_seo_keywords'][1] ?? 'Sekce, produkty, novinky, léto' ?>"  />
         </label>
     </div>
     <br />
