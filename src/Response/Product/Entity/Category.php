@@ -13,6 +13,7 @@ class Category
     private ?string $description2 = null;
     private ?string $seo_title = null;
     private ?string $seo_description = null;
+    private ?string $seo_keywords = null;
     private ?string $menu_title= null;
 
     public function __construct(array $data)
@@ -24,6 +25,7 @@ class Category
         $this->description2 = $data['description2'] ?? null;
         $this->seo_description = $data['seo_description'] ?? null;
         $this->seo_title = $data['seo_title'] ?? null;
+        $this->seo_keywords = $data['seo_keywords'] ?? null;
         $this->menu_title = $data['$menu_title'] ?? null;
     }
 
@@ -73,6 +75,14 @@ class Category
     public function getSeoTitle(): ?string
     {
         return $this->seo_title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoKeywords(): ?string
+    {
+        return $this->seo_keywords;
     }
 
     /**

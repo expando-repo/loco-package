@@ -11,6 +11,7 @@ class Tag
     private string $identifier;
     private ?string $seo_title = null;
     private ?string $seo_description = null;
+    private ?string $seo_keywords = null;
 
     public function __construct(array $data)
     {
@@ -19,6 +20,7 @@ class Tag
         $this->identifier = $data['identifier'];
         $this->seo_title = $data['seo_title'] ?? null;
         $this->seo_description = $data['seo_description'] ?? null;
+        $this->seo_keywords = $data['seo_keywords'] ?? null;
     }
 
     /**
@@ -59,5 +61,13 @@ class Tag
     public function getSeoDescription(): ?string
     {
         return $this->seo_description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoKeywords(): ?string
+    {
+        return $this->seo_keywords;
     }
 }

@@ -69,20 +69,6 @@
                 }
             }
 
-            foreach ($_POST['sections'] ?? [] as $k => $value) {
-                if ($value) {
-                    $identifier = $_POST['section_identifier'][$k] ?? null;
-                    $seoTitle = $_POST['section_seo_title'][$k] ?? null;
-                    $seoDescription = $_POST['section_seo_description'][$k] ?? null;
-                    $seoKeywords = $_POST['section_seo_keywords'][$k] ?? null;
-                    $product->addSection($value, null, $identifier, null, $seoTitle, $seoDescription, $seoKeywords);
-                }
-            }
-
-            if (!empty($_POST['supplier'])) {
-                $product->setSupplier($_POST['supplier']);
-            }
-
             foreach ($_POST['variant'] ?? [] as $value) {
                 if ($value['title'] ?? null) {
                     $variant = new VariantRequest();
@@ -111,7 +97,6 @@
                     $product->addVariant($variant);
                 }
             }
-            //echo json_encode($product);
             $response = $app->send($product);
         }
         catch (\Expando\LocoPackage\Exceptions\AppException $e) {
@@ -175,12 +160,6 @@
         <label>
             Url produktu<br />
             <input type="text" name="url" value="<?php echo $_POST['url'] ?? 'https://www.willsoor.cz/p/13946-panska-klasicka-kosile-s-tmave-modrym-kostkovanym-vzorem/' ?>"  />
-        </label>
-    </div>
-    <div>
-        <label>
-            Supplier (dodavatel)<br />
-            <input type="text" name="supplier" value="<?php echo $_POST['supplier'] ?? 'Expando' ?>"  />
         </label>
     </div>
     <br />
@@ -257,28 +236,6 @@
             <input type="text" name="category_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['category_seo_title'][2] ?? 'Kategorie klasických košil' ?>"  />
             <input type="text" name="category_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['category_seo_description'][2] ?? 'Tato stránka zobrazuje kategorii klasické košile' ?>"  />
             <input type="text" name="category_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['category_seo_keywords'][2] ?? 'Kategorie, produkty, klasické, košile' ?>"  />
-        </label>
-    </div>
-    <br />
-    <br />
-    <div>
-        <label>
-            Section 1<br />
-            <input type="text" name="section_identifier[]" placeholder="identifier" value="<?php echo $_POST['section_identifier'][0] ?? '' ?>"  />
-            <input type="text" name="sections[]" value="<?php echo $_POST['sections'][0] ?? 'NOVINKA LÉTA' ?>"  />
-            <input type="text" name="section_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['section_seo_title'][0] ?? 'Sekce novinek léta' ?>"  />
-            <input type="text" name="section_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['section_seo_description'][0] ?? 'Tato sekce zobrazuje novinky tohoto léta' ?>"  />
-            <input type="text" name="section_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['section_seo_keywords'][0] ?? 'Sekce, produkty, novinky, léto' ?>"  />
-        </label>
-    </div>
-    <div>
-        <label>
-            Section 2<br />
-            <input type="text" name="section_identifier[]" placeholder="identifier" value="<?php echo $_POST['section_identifier'][1] ?? '' ?>"  />
-            <input type="text" name="sections[]" value="<?php echo $_POST['sections'][1] ?? 'DOPLŇKY' ?>"  />
-            <input type="text" name="section_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['section_seo_title'][1] ?? 'Sekce doplňků' ?>"  />
-            <input type="text" name="section_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['section_seo_description'][1] ?? 'Tato sekce zobrazuje doplňky' ?>"  />
-            <input type="text" name="section_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['section_seo_keywords'][1] ?? 'Sekce, produkty, novinky, léto' ?>"  />
         </label>
     </div>
     <br />

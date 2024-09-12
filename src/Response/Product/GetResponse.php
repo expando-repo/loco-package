@@ -8,7 +8,6 @@ use Expando\LocoPackage\Exceptions\AppException;
 use Expando\LocoPackage\IResponse;
 use Expando\LocoPackage\Response\Product\Entity\Brand;
 use Expando\LocoPackage\Response\Product\Entity\Category;
-use Expando\LocoPackage\Response\Product\Entity\Section;
 use Expando\LocoPackage\Response\Product\Entity\Image;
 use Expando\LocoPackage\Response\Product\Entity\Tag;
 use Expando\LocoPackage\Response\Product\Entity\Variant;
@@ -182,20 +181,6 @@ class GetResponse implements IResponse
         foreach ($this->data['categories'] ?? [] as $value) {
             if (($value['category_id'] ?? null)) {
                 $result[] = new Category($value);
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * @return Section[]
-     */
-    public function getSections(): array
-    {
-        $result = [];
-        foreach ($this->data['sections'] ?? [] as $value) {
-            if (($value['section_id'] ?? null)) {
-                $result[] = new Section($value);
             }
         }
         return $result;

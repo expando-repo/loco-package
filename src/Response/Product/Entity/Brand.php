@@ -11,6 +11,7 @@ class Brand
     private string $identifier;
     private ?string $seo_title = null;
     private ?string $seo_description = null;
+    private ?string $seo_keywords = null;
 
     public function __construct(array $data)
     {
@@ -19,6 +20,7 @@ class Brand
         $this->identifier = $data['identifier'] ?? null;
         $this->seo_title = $data['seo_title'] ?? null;
         $this->seo_description = $data['seo_description'] ?? null;
+        $this->seo_keywords = $data['seo_keywords'] ?? null;
     }
 
     /**
@@ -56,5 +58,13 @@ class Brand
     public function getSeoDescription(): ?string
     {
         return $this->seo_description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoKeywords(): ?string
+    {
+        return $this->seo_keywords;
     }
 }

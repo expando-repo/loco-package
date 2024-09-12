@@ -24,11 +24,9 @@ class ProductRequest extends Base implements IRequest
     private ?string $url = null;
     private array $tags = [];
     private array $categories = [];
-    private array $sections = [];
     private array $images = [];
     private array $variants = [];
     private array $brands = [];
-    private ?string $supplier = null;
 
     public function __construct(int $connectionId, ?int $productId = null)
     {
@@ -84,17 +82,17 @@ class ProductRequest extends Base implements IRequest
      * @param string|null $identifier
      * @param string|null $seo_title
      * @param string|null $seo_description
-     * @param string|null $keywords
+     * @param string|null $seo_keywords
      * @return void
      */
-    public function addBrand(string $title, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $keywords = null): void
+    public function addBrand(string $title, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $seo_keywords = null): void
     {
         $brand = [
             'identifier' => $identifier,
             'title' => $title,
             'seo_title' => $seo_title,
             'seo_description' => $seo_description,
-            'keywords' => $keywords,
+            'seo_keywords' => $seo_keywords,
         ];
         $this->brands[] = $brand;
     }
@@ -127,55 +125,22 @@ class ProductRequest extends Base implements IRequest
 
     /**
      * @param string $title
-     * @param string|null $description
-     * @param string|null $identifier
-     * @param string|null $description2
-     * @param string|null $seo_title
-     * @param string|null $seo_description
-     * @param string|null $keywords
-     * @return void
-     */
-    public function addSection(string $title, ?string $description = null, ?string $identifier = null, ?string $description2 = null, ?string $seo_title = null, ?string $seo_description = null, ?string $keywords = null): void
-    {
-        $section = [
-            'identifier' => $identifier,
-            'title' => $title,
-            'description' => $description,
-            'description2' => $description2,
-            'seo_description' => $seo_description,
-            'seo_title' => $seo_title,
-            'keywords' => $keywords,
-        ];
-        $this->sections[] = $section;
-    }
-
-    /**
-     * @param string $title
      * @param string|null $identifier
      * @param string|null $seo_title
      * @param string|null $seo_description
-     * @param string|null $keywords
+     * @param string|null $seo_keywords
      * @return void
      */
-    public function addTag(string $title, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $keywords = null): void
+    public function addTag(string $title, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $seo_keywords = null): void
     {
         $tag = [
             'identifier' => $identifier,
             'title' => $title,
             'seo_title' => $seo_title,
             'seo_description' => $seo_description,
-            'keywords' => $keywords,
+            'seo_keywords' => $seo_keywords,
         ];
         $this->tags[] = $tag;
-    }
-
-    /**
-     * @param string $supplier
-     * @return void
-     */
-    public function setSupplier(string $supplier): void
-    {
-        $this->supplier = $supplier;
     }
 
     /**
@@ -279,9 +244,7 @@ class ProductRequest extends Base implements IRequest
             'images' => $this->images,
             'tags' => $this->tags,
             'categories' => $this->categories,
-            'sections' => $this->sections,
             'variants' => $this->variants,
-            'supplier' => $this->supplier,
         ];
     }
 }
