@@ -44,10 +44,11 @@
             foreach ($_POST['tags'] ?? [] as $k => $tag) {
                 if ($tag) {
                     $identifier = $_POST['tag_identifier'][$k] ?? null;
+                    $description = $_POST['tag_description'][$k] ?? null;
                     $seoTitle = $_POST['tag_seo_title'][$k] ?? null;
                     $seoDescription = $_POST['tag_seo_description'][$k] ?? null;
                     $seoKeywords = $_POST['tag_seo_keywords'][$k] ?? null;
-                    $product->addTag($tag, $identifier, $seoTitle, $seoDescription, $seoKeywords);
+                    $product->addTag($tag, $description, $identifier, $seoTitle, $seoDescription, $seoKeywords);
                 }
             }
 
@@ -191,6 +192,7 @@
             Tag 1<br />
             <input type="text" name="tag_identifier[]" placeholder="identifier" value="<?php echo $_POST['tag_identifier'][0] ?? '' ?>"  />
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][0] ?? 'Sleva' ?>"  />
+            <input type="text" name="tag_description[]" placeholder="Tag Description" value="<?php echo $_POST['tag_description'][0] ?? 'Popis štítku' ?>"  />
             <input type="text" name="tag_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['tag_seo_title'][0] ?? 'Produkt ve slevě' ?>"  />
             <input type="text" name="tag_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['tag_seo_description'][0] ?? 'Tato stránka zobrazuje produkty ve slevě' ?>"  />
             <input type="text" name="tag_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['tag_seo_keywords'][0] ?? 'Slevy, produkty' ?>"  />
@@ -201,6 +203,7 @@
             Tag 2<br />
             <input type="text" name="tag_identifier[]" placeholder="identifier" value="<?php echo $_POST['tag_identifier'][1] ?? '' ?>"  />
             <input type="text" name="tags[]" value="<?php echo $_POST['tags'][1] ?? 'Novinka' ?>"  />
+            <input type="text" name="tag_description[]" placeholder="Tag Description" value="<?php echo $_POST['tag_description'][1] ?? 'Popis druhého štítku' ?>"  />
             <input type="text" name="tag_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['tag_seo_title'][1] ?? 'Nový produkt' ?>"  />
             <input type="text" name="tag_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['tag_seo_description'][1] ?? 'Tato stránka zobrazuje novinky' ?>"  />
             <input type="text" name="tag_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['tag_seo_keywords'][1] ?? 'Novinky, produkty' ?>"  />

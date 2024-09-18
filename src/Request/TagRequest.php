@@ -12,6 +12,7 @@ class TagRequest extends Base implements IRequest
     private string $identifier;
 
     private string $title;
+    private ?string $description = null;
 
     private ?string $seoTitle = null;
     private ?string $seoDescription = null;
@@ -47,6 +48,14 @@ class TagRequest extends Base implements IRequest
     }
 
     /**
+     * @param string|null $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
      * @param string|null $seoTitle
      */
     public function setSeoTitle(?string $seoTitle): void
@@ -79,6 +88,7 @@ class TagRequest extends Base implements IRequest
             'connection_id' => $this->connectionId,
             'identifier' => $this->identifier,
             'title' => $this->title,
+            'description' => $this->description,
             'seo_title' => $this->seoTitle,
             'seo_description' => $this->seoDescription,
             'seo_keywords' => $this->seoKeywords,

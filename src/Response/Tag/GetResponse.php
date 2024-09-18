@@ -11,6 +11,7 @@ class GetResponse implements IResponse
 {
     protected string $identifier;
     protected string $title;
+    protected string $description;
     protected string $seo_title;
     protected string $seo_description;
     protected string $seo_keywords;
@@ -27,6 +28,7 @@ class GetResponse implements IResponse
         }
         $this->identifier = $data['identifier'];
         $this->title = $data['title'];
+        $this->title = $data['description'];
         $this->seo_title = $data['seo_title'];
         $this->seo_description = $data['seo_description'];
         $this->seo_keywords = $data['seo_keywords'];
@@ -54,6 +56,14 @@ class GetResponse implements IResponse
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->seo_description;
     }
 
     /**
@@ -89,6 +99,7 @@ class GetResponse implements IResponse
             'connection_id' => $this->connection_id,
             'identifier' => $this->identifier,
             'title' => $this->title,
+            'description' => $this->description,
             'seo_title' => $this->seo_title,
             'seo_description' => $this->seo_description,
             'seo_keywords' => $this->seo_keywords,

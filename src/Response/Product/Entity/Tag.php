@@ -6,29 +6,21 @@ namespace Expando\LocoPackage\Response\Product\Entity;
 
 class Tag
 {
-    private int $tag_id;
-    private string $title;
     private string $identifier;
+    private string $title;
+    private ?string $description = null;
     private ?string $seo_title = null;
     private ?string $seo_description = null;
     private ?string $seo_keywords = null;
 
     public function __construct(array $data)
     {
-        $this->tag_id = (int) $data['tag_id'];
-        $this->title = $data['title'];
         $this->identifier = $data['identifier'];
+        $this->title = $data['title'];
+        $this->description = $data['description'] ?? null;
         $this->seo_title = $data['seo_title'] ?? null;
         $this->seo_description = $data['seo_description'] ?? null;
         $this->seo_keywords = $data['seo_keywords'] ?? null;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTagId(): int
-    {
-        return $this->tag_id;
     }
 
     /**
@@ -37,6 +29,14 @@ class Tag
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
     /**

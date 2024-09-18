@@ -23,6 +23,7 @@ if ($_POST['send'] ?? null) {
         $tag = new TagRequest($_POST['connection_id'] ?? null); // Odpovídá za TagRequest
         $tag->setIdentifier($_POST['identifier']);
         $tag->setTitle($_POST['tag_title']);
+        $tag->setDescription($_POST['tag_description'] ?? null);
         $tag->setSeoTitle($_POST['tag_seo_title'] ?? null);
         $tag->setSeoDescription($_POST['tag_seo_description'] ?? null);
         $tag->setSeoKeywords($_POST['tag_seo_keywords'] ?? null);
@@ -49,6 +50,11 @@ if ($_POST['send'] ?? null) {
     <div>
         <label>Tag Title<br/>
             <input type="text" name="tag_title" value="<?php echo htmlspecialchars($_POST['tag_title'] ?? 'Velký výprodej') ?>"/>
+        </label>
+    </div>
+    <div>
+        <label>Tag Description<br/>
+            <input type="text" name="tag_description" value="<?php echo htmlspecialchars($_POST['tag_description'] ?? 'Popis štítku výprodej') ?>"/>
         </label>
     </div>
     <div>
