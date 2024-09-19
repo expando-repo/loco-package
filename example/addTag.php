@@ -1,5 +1,5 @@
 <?php
-use Expando\LocoPackage\Request\TagRequest; // Ujistěte se, že máte správný import pro TagRequest
+use Expando\LocoPackage\Request\TagRequest;
 
 require_once 'boot.php';
 
@@ -20,7 +20,7 @@ if (!$app->isLogged()) {
 
 if ($_POST['send'] ?? null) {
     try {
-        $tag = new TagRequest($_POST['connection_id'] ?? null); // Odpovídá za TagRequest
+        $tag = new TagRequest($_POST['connection_id'] ?? null);
         $tag->setIdentifier($_POST['identifier']);
         $tag->setTitle($_POST['tag_title']);
         $tag->setDescription($_POST['tag_description'] ?? null);

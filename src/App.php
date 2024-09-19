@@ -7,9 +7,11 @@ namespace Expando\LocoPackage;
 use Expando\LocoPackage\Exceptions\AppException;
 use Expando\LocoPackage\Request\ProductRequest;
 use Expando\LocoPackage\Request\TagRequest;
+use Expando\LocoPackage\Request\BrandRequest;
 use Expando\LocoPackage\Response\Connection;
 use Expando\LocoPackage\Response\Product;
 use Expando\LocoPackage\Response\Tag;
+use Expando\LocoPackage\Response\Brand;
 use JetBrains\PhpStorm\ArrayShape;
 
 class App
@@ -144,6 +146,9 @@ class App
         } else if ($request instanceof TagRequest) {
             $data = $this->sendToApp('/products/tag/' . $request->getConnectionId() . '/', 'POST', $request->asArray());
             $result = new Tag\PostResponse($data);
+        } else if ($request instanceof BrandRequest) {
+            $data = $this->sendToApp('/products/brand/' . $request->getConnectionId() . '/', 'POST', $request->asArray());
+            $result = new Brand\PostResponse($data);
         } else {
             throw new AppException('Request not defined');
         }

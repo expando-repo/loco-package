@@ -9,6 +9,7 @@ class Brand
     private int $brand_id;
     private string $title;
     private string $identifier;
+    private ?string $description = null;
     private ?string $seo_title = null;
     private ?string $seo_description = null;
     private ?string $seo_keywords = null;
@@ -17,6 +18,7 @@ class Brand
     {
         $this->brand_id = (int) $data['brand_id'];
         $this->title = $data['title'];
+        $this->description = $data['description'] ?? null;
         $this->identifier = $data['identifier'] ?? null;
         $this->seo_title = $data['seo_title'] ?? null;
         $this->seo_description = $data['seo_description'] ?? null;
@@ -66,5 +68,13 @@ class Brand
     public function getSeoKeywords(): ?string
     {
         return $this->seo_keywords;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 }

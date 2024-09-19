@@ -79,17 +79,19 @@ class ProductRequest extends Base implements IRequest
 
     /**
      * @param string $title
+     * @param string|null $description
      * @param string|null $identifier
      * @param string|null $seo_title
      * @param string|null $seo_description
      * @param string|null $seo_keywords
      * @return void
      */
-    public function addBrand(string $title, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $seo_keywords = null): void
+    public function addBrand(string $title, ?string $description = null, ?string $identifier = null, ?string $seo_title = null, ?string $seo_description = null, ?string $seo_keywords = null): void
     {
         $brand = [
             'identifier' => $identifier,
             'title' => $title,
+            'description' => $description,
             'seo_title' => $seo_title,
             'seo_description' => $seo_description,
             'seo_keywords' => $seo_keywords,

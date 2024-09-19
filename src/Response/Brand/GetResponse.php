@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Expando\LocoPackage\Response\Tag;
+namespace Expando\LocoPackage\Response\Brand;
 
 use Expando\LocoPackage\Exceptions\AppException;
 use Expando\LocoPackage\IResponse;
@@ -24,7 +24,7 @@ class GetResponse implements IResponse
     public function __construct(array $data)
     {
         if (($data['identifier'] ?? null) === null) {
-            throw new AppException('Response Tag not return identifier');
+            throw new AppException('Response Brand not return identifier');
         }
         $this->identifier = $data['identifier'];
         $this->title = $data['title'];
