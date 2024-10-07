@@ -171,7 +171,7 @@
             Brand 1<br />
             <input type="text" name="brand_identifier[]" placeholder="identifier" value="<?php echo $_POST['brand_identifier'][0] ?? '' ?>"  />
             <input type="text" name="brands[]" value="<?php echo $_POST['brands'][0] ?? 'Willsoor' ?>"  />
-            <input type="text" name="brand_description[]" placeholder="Popis značky" value="<?php echo $_POST['brand_seo_description'][0] ?? 'Popis značky 1' ?>"  />
+            <input type="text" name="brand_description[]" placeholder="Popis značky" value="<?php echo $_POST['brand_description'][0] ?? 'Popis značky 1' ?>"  />
             <input type="text" name="brand_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['brand_seo_title'][0] ?? 'Výrobek značky Willsoor' ?>"  />
             <input type="text" name="brand_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['brand_seo_description'][0] ?? 'Tato stránka zobrazuje výrobky značky Willsoor' ?>"  />
             <input type="text" name="brand_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['brand_seo_keywords'][0] ?? 'Výrobek, značka, Willsoor' ?>"  />
@@ -182,7 +182,7 @@
             Brand 2<br />
             <input type="text" name="brand_identifier[]" placeholder="identifier" value="<?php echo $_POST['brand_identifier'][1] ?? '' ?>"  />
             <input type="text" name="brands[]" value="<?php echo $_POST['brands'][1] ?? 'Expando' ?>"  />
-            <input type="text" name="brand_description[]" placeholder="Popis značky" value="<?php echo $_POST['brand_seo_description'][1] ?? 'Popis značky 2' ?>"  />
+            <input type="text" name="brand_description[]" placeholder="Popis značky" value="<?php echo $_POST['brand_description'][1] ?? 'Popis značky 2' ?>"  />
             <input type="text" name="brand_seo_title[]" placeholder="SEO Title" value="<?php echo $_POST['brand_seo_title'][1] ?? 'Výrobek značky Expando' ?>"  />
             <input type="text" name="brand_seo_description[]" placeholder="SEO Description" value="<?php echo $_POST['brand_seo_description'][1] ?? 'Tato stránka zobrazuje výrobky značky Expando' ?>"  />
             <input type="text" name="brand_seo_keywords[]" placeholder="SEO Keywords" value="<?php echo $_POST['brand_seo_keywords'][1] ?? 'Výrobek, značka, Expando' ?>"  />

@@ -9,7 +9,7 @@ use Expando\LocoPackage\IRequest;
 class TagRequest extends Base implements IRequest
 {
     private int $connectionId;
-    private string $identifier;
+    private ?string $identifier = null;
 
     private string $title;
     private ?string $description = null;
@@ -32,9 +32,9 @@ class TagRequest extends Base implements IRequest
     }
 
     /**
-     * @param string $identifier
+     * @param string|null $identifier
      */
-    public function setIdentifier(string $identifier): void
+    public function setIdentifier(?string $identifier): void
     {
         $this->identifier = $identifier;
     }
