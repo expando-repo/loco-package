@@ -8,10 +8,12 @@ use Expando\LocoPackage\Exceptions\AppException;
 use Expando\LocoPackage\Request\ProductRequest;
 use Expando\LocoPackage\Request\TagRequest;
 use Expando\LocoPackage\Request\BrandRequest;
+use Expando\LocoPackage\Request\CategoryRequest;
 use Expando\LocoPackage\Response\Connection;
 use Expando\LocoPackage\Response\Product;
 use Expando\LocoPackage\Response\Tag;
 use Expando\LocoPackage\Response\Brand;
+use Expando\LocoPackage\Response\Category;
 use JetBrains\PhpStorm\ArrayShape;
 
 class App
@@ -144,11 +146,29 @@ class App
                 $result = new Product\PostResponse($data);
             }
         } else if ($request instanceof TagRequest) {
-            $data = $this->sendToApp('/products/tag/' . $request->getConnectionId() . '/', 'POST', $request->asArray());
-            $result = new Tag\PostResponse($data);
+            if ($request->getTagId()) {
+                $data = $this->sendToApp('/tags/' . $request->getConnectionId() . '/' . $request->getTagId() . '/', 'PUT', $request->asArray());
+                $result = new Tag\PostResponse($data);
+            } else {
+                $data = $this->sendToApp('/tags/' . $request->getConnectionId() . '/', 'POST', $request->asArray());
+                $result = new Tag\PostResponse($data);
+            }
         } else if ($request instanceof BrandRequest) {
-            $data = $this->sendToApp('/products/brand/' . $request->getConnectionId() . '/', 'POST', $request->asArray());
-            $result = new Brand\PostResponse($data);
+            if ($request->getBrandId()) {
+                $data = $this->sendToApp('/brands/' . $request->getConnectionId() . '/' . $request->getBrandId() . '/', 'PUT', $request->asArray());
+                $result = new Brand\PostResponse($data);
+            } else {
+                $data = $this->sendToApp('/brands/' . $request->getConnectionId() . '/', 'POST', $request->asArray());
+                $result = new Brand\PostResponse($data);
+            }
+        } else if ($request instanceof CategoryRequest) {
+            if ($request->getCategoryId()) {
+                $data = $this->sendToApp('/categories/' . $request->getConnectionId() . '/' . $request->getCategoryId() . '/', 'PUT', $request->asArray());
+                $result = new Category\PostResponse($data);
+            } else {
+                $data = $this->sendToApp('/categories/' . $request->getConnectionId() . '/', 'POST', $request->asArray());
+                $result = new Category\PostResponse($data);
+            }
         } else {
             throw new AppException('Request not defined');
         }
@@ -189,6 +209,66 @@ class App
             'on_page' => $onPage,
         ]));
         return new Product\ListResponse($data);
+    }
+
+    /**
+     * @param int $connectionId
+     * @param int $page
+     * @param int $onPage
+     * @return Tag\ListResponse
+     * @throws AppException
+     */
+    public function listTags(int $connectionId, int $page = 1, int $onPage = 20): Tag\ListResponse
+    {
+        if (!$this->isLogged()) {
+            throw new AppException('App is not logged');
+        }
+
+        $data = $this->sendToApp('/tags/' . $connectionId . '/', 'GET', array_filter([
+            'page' => $page,
+            'on_page' => $onPage,
+        ]));
+        return new Tag\ListResponse($data);
+    }
+
+    /**
+     * @param int $connectionId
+     * @param int $page
+     * @param int $onPage
+     * @return Brand\ListResponse
+     * @throws AppException
+     */
+    public function listBrands(int $connectionId, int $page = 1, int $onPage = 20): Brand\ListResponse
+    {
+        if (!$this->isLogged()) {
+            throw new AppException('App is not logged');
+        }
+
+        $data = $this->sendToApp('/brands/' . $connectionId . '/', 'GET', array_filter([
+            'page' => $page,
+            'on_page' => $onPage,
+        ]));
+        return new Brand\ListResponse($data);
+    }
+    
+    /**
+     * @param int $connectionId
+     * @param int $page
+     * @param int $onPage
+     * @return Category\ListResponse
+     * @throws AppException
+     */
+    public function listCategories(int $connectionId, int $page = 1, int $onPage = 20): Category\ListResponse
+    {
+        if (!$this->isLogged()) {
+            throw new AppException('App is not logged');
+        }
+
+        $data = $this->sendToApp('/categories/' . $connectionId . '/', 'GET', array_filter([
+            'page' => $page,
+            'on_page' => $onPage,
+        ]));
+        return new Category\ListResponse($data);
     }
 
     /**

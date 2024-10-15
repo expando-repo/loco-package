@@ -21,7 +21,8 @@ if (!$app->isLogged()) {
 if ($_POST['send'] ?? null) {
     try {
         $brand = new BrandRequest($_POST['connection_id'] ?? null);
-        $brand->setIdentifier($_POST['identifier']);
+        $brand->setIdentifier($_POST['identifier'] ?? null);
+        $brand->setBrandId(intval($_POST['brand_id']) ?? null);
         $brand->setTitle($_POST['brand_title']);
         $brand->setDescription($_POST['brand_description'] ?? null);
         $brand->setSeoTitle($_POST['brand_seo_title'] ?? null);
@@ -32,7 +33,7 @@ if ($_POST['send'] ?? null) {
         die($e->getMessage());
     }
 
-    echo 'Brand Identifier: ' . $response->getIdentifier() . '<br/><br/>';
+    echo 'Brand ID: ' . $response->getBrandId() . '<br/><br/>';
 }
 ?>
 
@@ -40,6 +41,11 @@ if ($_POST['send'] ?? null) {
     <div>
         <label>Connection ID<br/>
             <input type="text" name="connection_id" value="<?php echo htmlspecialchars($_POST['connection_id'] ?? '') ?>"/>
+        </label>
+    </div>
+    <div>
+        <label>Brand ID<br/>
+            <input type="text" name="brand_id" value="<?php echo $_POST['brand_id'] ?? null ?>"/>
         </label>
     </div>
     <div>

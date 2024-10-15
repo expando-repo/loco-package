@@ -2,20 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Expando\LocoPackage\Response\Brand;
+namespace Expando\LocoPackage\Response\Category;
 
 use Expando\LocoPackage\Exceptions\AppException;
 use Expando\LocoPackage\IResponse;
 
 class GetResponse implements IResponse
 {
-    protected int $brand_id;
+    protected int $category_id;
     protected string $identifier;
     protected string $title;
     protected ?string $description = null;
+    protected ?string $description2 = null;
     protected ?string $seo_title = null;
     protected ?string $seo_description = null;
     protected ?string $seo_keywords = null;
+    protected ?string $menu_title = null;
     protected ?string $status = null;
 
     /**
@@ -30,24 +32,26 @@ class GetResponse implements IResponse
             $data = $data['data'];
         }
 
-        if (($data['brand_id'] ?? null) === null) {
-            throw new AppException('Response Brand not return brand_id');
+        if (($data['category_id'] ?? null) === null) {
+            throw new AppException('Response not return category_id');
         }
-        $this->brand_id = $data['brand_id'];
+        $this->category_id = $data['category_id'];
         $this->identifier = $data['identifier'];
         $this->title = $data['title'];
         $this->description = $data['description'];
+        $this->description2 = $data['description2'];
         $this->seo_title = $data['seo_title'];
         $this->seo_description = $data['seo_description'];
         $this->seo_keywords = $data['seo_keywords'];
+        $this->menu_title = $data['menu_title'];
     }
 
     /**
      * @return int
      */
-    public function getBrandId(): int
+    public function getCategoryId(): int
     {
-        return $this->brand_id;
+        return $this->category_id;
     }
 
     /**
@@ -67,7 +71,7 @@ class GetResponse implements IResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTitle(): string
     {
@@ -79,11 +83,19 @@ class GetResponse implements IResponse
      */
     public function getDescription(): ?string
     {
-        return $this->seo_description;
+        return $this->description;
     }
 
     /**
-     *  @return string|null
+     * @return string|null
+     */
+    public function getDescription2(): ?string
+    {
+        return $this->description2;
+    }
+
+    /**
+     * @return string|null
      */
     public function getSeoTitle(): ?string
     {
@@ -109,6 +121,14 @@ class GetResponse implements IResponse
     /**
      * @return string|null
      */
+    public function getMenuTitle(): ?string
+    {
+        return $this->menu_title;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getStatus(): ?string
     {
         return $this->status;
@@ -121,13 +141,15 @@ class GetResponse implements IResponse
     {
         return [
             'connection_id' => $this->connection_id,
-            'brand_id' => $this->brand_id,
+            'category_id' => $this->category_id,
             'identifier' => $this->identifier,
             'title' => $this->title,
             'description' => $this->description,
-            'seo_title' => $this->seo_title,
+            'description2' => $this->description2,
             'seo_description' => $this->seo_description,
+            'seo_title' => $this->seo_title,
             'seo_keywords' => $this->seo_keywords,
+            'menu_title' => $this->menu_title,
         ];
     }
 }

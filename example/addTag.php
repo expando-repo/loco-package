@@ -21,7 +21,8 @@ if (!$app->isLogged()) {
 if ($_POST['send'] ?? null) {
     try {
         $tag = new TagRequest($_POST['connection_id'] ?? null);
-        $tag->setIdentifier($_POST['identifier']);
+        $tag->setTagId(intval($_POST['tag_id']));
+        $tag->setIdentifier($_POST['identifier'] ?? null);
         $tag->setTitle($_POST['tag_title']);
         $tag->setDescription($_POST['tag_description'] ?? null);
         $tag->setSeoTitle($_POST['tag_seo_title'] ?? null);
@@ -32,7 +33,7 @@ if ($_POST['send'] ?? null) {
         die($e->getMessage());
     }
 
-    echo 'Tag Identifier: ' . $response->getIdentifier() . '<br/><br/>';
+    echo 'Tag ID: ' . $response->getTagId() . '<br/><br/>';
 }
 ?>
 
@@ -40,6 +41,11 @@ if ($_POST['send'] ?? null) {
     <div>
         <label>Connection ID<br/>
             <input type="text" name="connection_id" value="<?php echo htmlspecialchars($_POST['connection_id'] ?? '') ?>"/>
+        </label>
+    </div>
+    <div>
+        <label>Tag ID<br/>
+            <input type="text" name="tag_id" value="<?php echo $_POST['tag_id'] ?? null ?>"/>
         </label>
     </div>
     <div>

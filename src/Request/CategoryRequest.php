@@ -6,18 +6,19 @@ namespace Expando\LocoPackage\Request;
 
 use Expando\LocoPackage\IRequest;
 
-class BrandRequest extends Base implements IRequest
+class CategoryRequest extends Base implements IRequest
 {
     private int $connectionId;
-    private ?int $brandId = null;
+    private ?int $categoryId = null;
     private ?string $identifier = null;
 
     private string $title;
     private ?string $description = null;
-
+    private ?string $description2 = null;
     private ?string $seoTitle = null;
     private ?string $seoDescription = null;
     private ?string $seoKeywords = null;
+    private ?string $menuTitle = null;
 
     public function __construct(int $connectionId)
     {
@@ -35,17 +36,17 @@ class BrandRequest extends Base implements IRequest
     /**
      * @return int|null
      */
-    public function getBrandId(): ?int
+    public function getCategoryId(): ?int
     {
-        return $this->brandId;
+        return $this->categoryId;
     }
 
     /**
-     * @param int|null $brandId
+     * @param int|null $categoryId
      */
-    public function setBrandId(?int $brandId): void
+    public function setCategoryId(?int $categoryId): void
     {
-        $this->brandId = $brandId;
+        $this->categoryId = $categoryId;
     }
 
     /**
@@ -67,9 +68,25 @@ class BrandRequest extends Base implements IRequest
     /**
      * @param string|null $description
      */
-    public function setDescription(?string $description): void
+    public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription2(?string $description2): void
+    {
+        $this->description2 = $description2;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setMenuTitle(?string $menuTitle): void
+    {
+        $this->menuTitle = $menuTitle;
     }
 
     /**
@@ -103,13 +120,15 @@ class BrandRequest extends Base implements IRequest
     {
         return [
             'connection_id' => $this->connectionId,
-            'brand_id' => $this->brandId,
             'identifier' => $this->identifier,
+            'category_id' => $this->categoryId,
             'title' => $this->title,
             'description' => $this->description,
-            'seo_title' => $this->seoTitle,
+            'description2' => $this->description2,
             'seo_description' => $this->seoDescription,
+            'seo_title' => $this->seoTitle,
             'seo_keywords' => $this->seoKeywords,
+            'menu_title' => $this->menuTitle,
         ];
     }
 }

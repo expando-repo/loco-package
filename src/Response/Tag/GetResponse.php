@@ -9,12 +9,14 @@ use Expando\LocoPackage\IResponse;
 
 class GetResponse implements IResponse
 {
+    protected int $tag_id;
     protected string $identifier;
     protected string $title;
-    protected string $description;
-    protected string $seo_title;
-    protected string $seo_description;
-    protected string $seo_keywords;
+    protected ?string $description = null;
+    protected ?string $seo_title = null;
+    protected ?string $seo_description = null;
+    protected ?string $seo_keywords = null;
+    protected ?string $status = null;
 
     /**
      * ProductPostResponse constructor.
@@ -23,15 +25,30 @@ class GetResponse implements IResponse
      */
     public function __construct(array $data)
     {
-        if (($data['identifier'] ?? null) === null) {
-            throw new AppException('Response Tag not return identifier');
+        if(isset($data['data'])) {
+            $this->status = $data['status'];
+            $data = $data['data'];
         }
+
+        if (($data['tag_id'] ?? null) === null) {
+            throw new AppException('Response Tag not return tag_id');
+        }
+        
+        $this->tag_id = $data['tag_id'];
         $this->identifier = $data['identifier'];
         $this->title = $data['title'];
-        $this->title = $data['description'];
+        $this->description = $data['description'];
         $this->seo_title = $data['seo_title'];
         $this->seo_description = $data['seo_description'];
         $this->seo_keywords = $data['seo_keywords'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getTagId(): int
+    {
+        return $this->tag_id;
     }
 
     /**
@@ -59,35 +76,43 @@ class GetResponse implements IResponse
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->seo_description;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSeoTitle(): string
+    public function getSeoTitle(): ?string
     {
         return $this->seo_title;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSeoDescription(): string
+    public function getSeoDescription(): ?string
     {
         return $this->seo_description;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSeoKeywords(): string
+    public function getSeoKeywords(): ?string
     {
         return $this->seo_keywords;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
     }
 
     /**
@@ -97,6 +122,7 @@ class GetResponse implements IResponse
     {
         return [
             'connection_id' => $this->connection_id,
+            'tag_id' => $this->tag_id,
             'identifier' => $this->identifier,
             'title' => $this->title,
             'description' => $this->description,
