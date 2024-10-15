@@ -9,7 +9,7 @@ use Expando\LocoPackage\IResponse;
 
 class PostResponse implements IResponse
 {
-    private string $identifier;
+    private int $brand_id;
 
     /**
      * PostResponse constructor.
@@ -18,17 +18,17 @@ class PostResponse implements IResponse
      */
     public function __construct(array $data)
     {
-        if (($data['identifier'] ?? null) === null) {
-            throw new AppException('Response not return identifier');
+        if (($data['brand_id'] ?? null) === null) {
+            throw new AppException('Response not return brand_id');
         }
-        $this->identifier = $data['identifier'];
+        $this->brand_id = $data['brand_id'];
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getIdentifier(): string
+    public function getBrandId(): int
     {
-        return $this->identifier;
+        return $this->brand_id;
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Expando\LocoPackage\Response\Brand;
+namespace Expando\LocoPackage\Response\Category;
 
 use Expando\LocoPackage\Exceptions\AppException;
 use Expando\LocoPackage\IResponse;
@@ -13,7 +13,7 @@ class ListResponse implements IResponse
     use PaginatorTrait;
 
     /** @var GetResponse[]  */
-    private array $brands = [];
+    private array $categories = [];
     private string $status;
 
     /**
@@ -23,12 +23,12 @@ class ListResponse implements IResponse
      */
     public function __construct(array $data)
     {
-        if (($data['data']['brands'] ?? null) === null) {
-            throw new AppException('Response not return brands');
+        if (($data['data']['categories'] ?? null) === null) {
+            throw new AppException('Response not return categories');
         }
         $this->status = $data['status'];
-        foreach ($data['data']['brands'] as $translation) {
-            $this->brands[$translation['brand_id']] = new GetResponse($translation);
+        foreach ($data['data']['categories'] as $translation) {
+            $this->categories[$translation['category_id']] = new GetResponse($translation);
         }
         $this->setPaginatorData($data['data']['paginator'] ?? []);
     }
@@ -36,9 +36,9 @@ class ListResponse implements IResponse
     /**
      * @return GetResponse[]
      */
-    public function getBrands(): array
+    public function getCategories(): array
     {
-        return $this->brands;
+        return $this->categories;
     }
 
     /**

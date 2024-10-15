@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Expando\LocoPackage\Response\Tag;
+namespace Expando\LocoPackage\Response\Category;
 
 use Expando\LocoPackage\Exceptions\AppException;
 use Expando\LocoPackage\IResponse;
 
 class PostResponse implements IResponse
 {
-    private int $tag_id;
+    private int $category_id;
 
     /**
      * PostResponse constructor.
@@ -18,17 +18,17 @@ class PostResponse implements IResponse
      */
     public function __construct(array $data)
     {
-        if (($data['tag_id'] ?? null) === null) {
-            throw new AppException('Response not return tag_id');
+        if (($data['category_id'] ?? null) === null) {
+            throw new AppException('Response not return category_id');
         }
-        $this->tag_id = $data['tag_id'];
+        $this->category_id = $data['category_id'];
     }
 
     /**
      * @return int
      */
-    public function getTagId(): int
+    public function getCategoryId(): int
     {
-        return $this->tag_id;
+        return $this->category_id;
     }
 }

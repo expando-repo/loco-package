@@ -30,7 +30,12 @@
         <li><a href="deleteTranslation.php">delete translation</a></li>
         <li><a href="listConnection.php">list connections</a></li>
         <li><a href="addTag.php">add/update tag</a></li>
+        <li><a href="getTag.php">get tag</a></li>
+        <li><a href="listTags.php">list tags</a></li>
         <li><a href="addBrand.php">add/update brand</a></li>
+        <li><a href="listBrands.php">list brands</a></li>
+        <li><a href="addBrand.php">add/update category</a></li>
+        <li><a href="listCategories.php">list categories</a></li>
         <li></li>
         <li><a href="logout.php">logout (delete token)</a></li>
     </ul>
