@@ -10,6 +10,8 @@ use Expando\LocoPackage\Request\TagRequest;
 use Expando\LocoPackage\Request\BrandRequest;
 use Expando\LocoPackage\Response\Connection;
 use Expando\LocoPackage\Response\Product;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Expando\LocoPackage\Response\Tag;
 use Expando\LocoPackage\Response\Brand;
 use JetBrains\PhpStorm\ArrayShape;
@@ -330,5 +332,40 @@ class App
             throw new AppException('Response error: ' . ($data['message'] ?? null));
         }
         return $data;
+    }
+
+    /**
+     * @param array $payload
+     * @return array
+     * @throws AppException
+     */
+    public function graphQL(array $payload): array
+    {
+        if (!$this->access_token) {
+            throw new AppException('Access token is required');
+        }
+
+        try {
+            $client = new Client([
+                'base_uri' => $this->url,
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->access_token
+                ]
+            ]);
+            $response = $client->post("graphql", [
+                'body' => json_encode($payload)
+            ]);
+            $arrayResponse = json_decode((string) $response->getBody(), true);
+
+        } catch(GuzzleException $e) {
+            throw new AppException($e->getMessage());
+        }
+
+        if (isset($arrayResponse['errors'])) {
+            throw new AppException($arrayResponse['errors'][0]['message'] ?? 'Error');
+        }
+
+        return $arrayResponse;
     }
 }

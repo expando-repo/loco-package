@@ -31,6 +31,7 @@
         <li><a href="listConnection.php">list connections</a></li>
         <li><a href="addTag.php">add/update tag</a></li>
         <li><a href="addBrand.php">add/update brand</a></li>
+        <li><a href="listProductsQraphQL.php">list product (GraphQL)</a></li>
         <li></li>
         <li><a href="logout.php">logout (delete token)</a></li>
     </ul>
