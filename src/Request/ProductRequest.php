@@ -12,6 +12,7 @@ class ProductRequest extends Base implements IRequest
     private ?int $productId = null;
     private string $status = 'active';
     private string $identifier;
+    private string $code;
 
     private string $title;
     private ?string $description = null;
@@ -180,6 +181,14 @@ class ProductRequest extends Base implements IRequest
     }
 
     /**
+     * @param string $code
+     */
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
      * @param string $title
      */
     public function setTitle(string $title): void
@@ -237,6 +246,7 @@ class ProductRequest extends Base implements IRequest
             'product_id' => $this->productId,
             'status' => $this->status,
             'identifier' => $this->identifier,
+            'code' => $this->code,
             'title' => $this->title,
             'description' => $this->description,
             'description2' => $this->description2,

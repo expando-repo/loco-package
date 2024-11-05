@@ -24,6 +24,7 @@
             $product = new ProductRequest($_POST['connection_id'] ?? null, $_POST['product_id'] ?: null);
             $product->active();
             $product->setIdentifier($_POST['identifier']);
+            $product->setCode($_POST['code']);
             $product->setTitle($_POST['product_title']);
             $product->setDescription($_POST['product_description']);
             $product->setDescription2($_POST['product_description2'] ?? null);
@@ -126,6 +127,12 @@
         <label>
             Identifier<br />
             <input type="text" name="identifier" value="<?php echo $_POST['identifier'] ?? '13946' ?>"  />
+        </label>
+    </div>
+    <div>
+        <label>
+            Code<br />
+            <input type="text" name="code" value="<?php echo $_POST['code'] ?? 'ABC1234' ?>"  />
         </label>
     </div>
     <div>
